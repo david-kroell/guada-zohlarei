@@ -42,7 +42,13 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = BillsFragment.newInstance();
                                 break;
                             case R.id.action_stocks:
-                                Toast.makeText(MainActivity.this, "stocks", Toast.LENGTH_SHORT).show();
+                                selectedFragment = StocksFragment.newInstance();
+                                break;
+                            case R.id.action_quick_send:
+                                selectedFragment = QuickSendFragment.newInstance();
+                                break;
+                            case R.id.action_account:
+                                selectedFragment = AccountFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
