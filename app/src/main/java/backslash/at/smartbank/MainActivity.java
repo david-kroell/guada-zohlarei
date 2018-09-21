@@ -1,11 +1,11 @@
 package backslash.at.smartbank;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,14 +18,11 @@ import java.lang.reflect.Field;
 public class MainActivity extends AppCompatActivity {
 
     private Fragment selectedFragment = null;
-    private OverviewFragment overviewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        overviewFragment = OverviewFragment.newInstance();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -39,28 +36,26 @@ public class MainActivity extends AppCompatActivity {
 
                         switch (item.getItemId()) {
                             case R.id.action_overview:
-                                selectedFragment = overviewFragment;
-                                //break;
-                                Toast.makeText(MainActivity.this, "overview", Toast.LENGTH_SHORT).show();
+                                selectedFragment = OverviewFragment.newInstance();
                                 break;
                             case R.id.action_bills:
-                                Toast.makeText(MainActivity.this, "bills", Toast.LENGTH_SHORT).show();
+                                selectedFragment = BillsFragment.newInstance();
                                 break;
                             case R.id.action_stocks:
                                 Toast.makeText(MainActivity.this, "stocks", Toast.LENGTH_SHORT).show();
                                 break;
                         }
-                        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        //transaction.replace(R.id.frame_layout, selectedFragment);
-                        //transaction.commit();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
                         return true;
                     }
                 });
 
         //Manually displaying the first fragment - one time only
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
-//        transaction.commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, OverviewFragment.newInstance());
+        transaction.commit();
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
