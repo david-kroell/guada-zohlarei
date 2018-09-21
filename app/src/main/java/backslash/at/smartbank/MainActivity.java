@@ -17,10 +17,15 @@ import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment selectedFragment = null;
+    private OverviewFragment overviewFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        overviewFragment = OverviewFragment.newInstance();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -31,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
+
                         switch (item.getItemId()) {
                             case R.id.action_overview:
-                                //selectedFragment = OverviewFragment.newInstance();
+                                selectedFragment = overviewFragment;
                                 //break;
                                 Toast.makeText(MainActivity.this, "overview", Toast.LENGTH_SHORT).show();
                                 break;
