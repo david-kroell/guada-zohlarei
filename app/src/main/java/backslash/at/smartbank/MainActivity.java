@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.lang.reflect.Field;
 
@@ -41,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.action_bills:
                                 selectedFragment = BillsFragment.newInstance();
                                 break;
-                            case R.id.action_stocks:
-                                selectedFragment = StocksFragment.newInstance();
-                                break;
+//                            case R.id.action_stocks:
+//                                selectedFragment = StocksFragment.newInstance();
+//                                break;
                             case R.id.action_quick_send:
                                 selectedFragment = QuickSendFragment.newInstance();
                                 break;

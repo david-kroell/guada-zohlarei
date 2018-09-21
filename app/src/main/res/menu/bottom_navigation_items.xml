@@ -11,11 +11,11 @@
         android:icon="@drawable/ic_receipt_black_24dp"
         android:title="Bills"
         app:showAsAction="always|withText"/>
-    <item
-        android:id="@+id/action_stocks"
-        android:icon="@drawable/ic_stocks_24dp"
-        android:title="Stocks"
-        app:showAsAction="always|withText"/>
+    <!--<item-->
+        <!--android:id="@+id/action_stocks"-->
+        <!--android:icon="@drawable/ic_stocks_24dp"-->
+        <!--android:title="Stocks"-->
+        <!--app:showAsAction="always|withText"/>-->
     <item
         android:id="@+id/action_quick_send"
         android:icon="@drawable/ic_compare_arrows_black_24dp"
