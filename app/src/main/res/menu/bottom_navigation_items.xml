@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_overview"
+        android:icon="@drawable/ic_account_balance_black_24dp"
+        android:title="Overview"
+        app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/action_bills"
+        android:icon="@drawable/ic_receipt_black_24dp"
+        android:title="Bills"
+        app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/action_stocks"
+        android:icon="@drawable/ic_stocks_24dp"
+        android:title="Stocks"
+        app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/action_quick_send"
+        android:icon="@drawable/ic_compare_arrows_black_24dp"
+        android:title="Quick send"
+        app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/action_account"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="Account"
+        app:showAsAction="always|withText" />
+</menu>
