@@ -41,7 +41,12 @@ public class VolleyRequestHandlerAccounts {
         requestQueue = RequestQueueSingleton.getInstance(context).getRequestQueue();
         this.IcallbackAccounts = icallbackAccounts;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        connected = cm.getActiveNetworkInfo().isConnected();
+        if(cm.getActiveNetworkInfo() != null) {
+            connected = cm.getActiveNetworkInfo().isConnected();
+        } else {
+            connected = false;
+        }
+
         this.uri = "http://172.31.203.133:8081/v1/account";
     }
 

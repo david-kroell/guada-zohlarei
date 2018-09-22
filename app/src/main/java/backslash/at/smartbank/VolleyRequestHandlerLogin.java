@@ -27,7 +27,12 @@ public class VolleyRequestHandlerLogin {
         requestQueue = RequestQueueSingleton.getInstance(context).getRequestQueue();
         this.IcallbackLogin = icallbackLogin;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        connected = cm.getActiveNetworkInfo().isConnected();
+        if(cm.getActiveNetworkInfo() != null) {
+            connected = cm.getActiveNetworkInfo().isConnected();
+        } else {
+            connected = false;
+        }
+
         this.uri = "http://172.31.203.133:8081/v1/user/login";
     }
 
@@ -61,9 +66,14 @@ public class VolleyRequestHandlerLogin {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    NetworkResponse networkResponse = error.networkResponse;
-                    IcallbackLogin.loginError(networkResponse.statusCode);
-                    error.printStackTrace();
+                    if(error.networkResponse != null) {
+                        NetworkResponse networkResponse = error.networkResponse;
+                        IcallbackLogin.loginError(networkResponse.statusCode);
+                        error.printStackTrace();
+                    } else {
+                        IcallbackLogin.loginError(413);
+                    }
+
                 }
             }) {
                 @Override
@@ -78,7 +88,7 @@ public class VolleyRequestHandlerLogin {
             postRequest.setTag("TAG");
             requestQueue.add(postRequest);
         } else {
-            IcallbackLogin.loginSuccess("NETWORK_ERROR");
+            IcallbackLogin.loginError(9999);
         }
     }
 
