@@ -1,6 +1,7 @@
 package backslash.at.smartbank;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -38,7 +40,7 @@ public class OverviewFragment extends Fragment {
         ListView listViewOverview = v.findViewById(R.id.listViewOverview);
         final List<Transaction> transactions = new ArrayList<Transaction>();
         transactions.add(new Transaction("ATSOURCE1", "ATDEST2", Calendar.getInstance().getTime(), 10.99, "AliExpress"));
-        transactions.add(new Transaction("ATSOURCE2", "ATDEST2", Calendar.getInstance().getTime(), 9.99, "Amazon"));
+        transactions.add(new Transaction("ATSOURCE2", "ATDEST2", Calendar.getInstance().getTime(), -9.99, "Amazon"));
         ArrayAdapter<Transaction> arrayAdapter = new ArrayAdapter<Transaction>(getContext(), R.layout.listitem_overview, R.id.textViewTransactionInformation, transactions) {
             @NonNull
             @Override
@@ -52,6 +54,13 @@ public class OverviewFragment extends Fragment {
                 String valueText = transactions.get(position).getValue().toString();
                 String informationText = transactions.get(position).getInformation();
 
+                Double dValue = transactions.get(position).getValue();
+                if(dValue > 0) {
+                    value.setTextColor(Color.parseColor("#007F32"));
+                } else if(dValue < 0) {
+                    value.setTextColor(Color.RED);
+                }
+
                 date.setText(dateText);
                 value.setText(valueText);
                 information.setText(informationText);
@@ -60,6 +69,16 @@ public class OverviewFragment extends Fragment {
             }
         };
         listViewOverview.setAdapter(arrayAdapter);
+
+        String bankAccounts[] = {"ATSeas", "AT2"};
+
+        Spinner spinner = v.findViewById(R.id.spinnerBankAccount);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, bankAccounts, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
         return v;
     }
