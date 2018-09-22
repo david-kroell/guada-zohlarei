@@ -78,7 +78,7 @@ public class OverviewFragment extends Fragment {
 
         Spinner spinner = v.findViewById(R.id.spinnerBankAccount);
         // Values
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, bankAccounts);
+        ArrayAdapter<BankAccount> adapter = new ArrayAdapter<BankAccount>(getActivity(), android.R.layout.simple_spinner_item, MainActivity.bankAccounts);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         // On select
