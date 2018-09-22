@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.lang.reflect.Field;
@@ -36,18 +38,19 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_overview:
                                 selectedFragment = OverviewFragment.newInstance();
+                                setTitle("Financial Overview");
                                 break;
                             case R.id.action_bills:
                                 selectedFragment = BillsFragment.newInstance();
+                                setTitle("Bill Management");
                                 break;
-//                            case R.id.action_stocks:
-//                                selectedFragment = StocksFragment.newInstance();
-//                                break;
                             case R.id.action_quick_send:
                                 selectedFragment = QuickSendFragment.newInstance();
+                                setTitle("Quick Send");
                                 break;
                             case R.id.action_account:
                                 selectedFragment = AccountFragment.newInstance();
+                                setTitle("Account Information");
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -89,5 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("BottomNav", "Unable to change value of shift mode", e);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_raiffeisen, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

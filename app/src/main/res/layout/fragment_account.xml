@@ -8,59 +8,81 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Name:"/>
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/textbox"
         android:clickable="false"
         android:focusable="false"
+        android:layout_marginBottom="10dp"
+        android:text="Francisco Rossi"
+        android:textColor="#555"
         android:enabled="false" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Address:"/>
 
     <EditText
         android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/textbox"
         android:clickable="false"
         android:focusable="false"
+        android:layout_marginBottom="10dp"
+        android:textColor="#555"
+        android:text="Strada grande 99"
         android:enabled="false" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="ZIP Code:"/>
 
     <EditText
         android:id="@+id/editTextZipCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/textbox"
         android:clickable="false"
         android:focusable="false"
+        android:layout_marginBottom="10dp"
+        android:textColor="#555"
+        android:text="20121"
         android:enabled="false" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="City:"/>
 
     <EditText
         android:id="@+id/editTextCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/textbox"
         android:clickable="false"
         android:focusable="false"
+        android:layout_marginBottom="20dp"
+        android:text="Milano"
+        android:textColor="#555"
         android:enabled="false" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_primary"
+        android:textColor="@android:color/white"
         android:text="Logout"/>
 
 </LinearLayout>
