@@ -11,10 +11,12 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -70,15 +72,28 @@ public class OverviewFragment extends Fragment {
         };
         listViewOverview.setAdapter(arrayAdapter);
 
-        String bankAccounts[] = {"ATSeas", "AT2"};
+        final List<String> bankAccounts = new ArrayList<String>();
+        bankAccounts.add("AT1");
+        bankAccounts.add("AT2");
 
         Spinner spinner = v.findViewById(R.id.spinnerBankAccount);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, bankAccounts, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Values
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, bankAccounts);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        // On select
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Toast.makeText(getActivity(), bankAccounts.get(position), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                Toast.makeText(getActivity(), "nix", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
         return v;
     }
