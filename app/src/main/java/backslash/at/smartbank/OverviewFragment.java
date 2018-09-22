@@ -85,14 +85,13 @@ public class OverviewFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Toast.makeText(getActivity(), bankAccounts.get(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), bankAccounts.get(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                Toast.makeText(getActivity(), "nix", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "nix", Toast.LENGTH_SHORT).show();
             }
-
         });
 
         return v;
