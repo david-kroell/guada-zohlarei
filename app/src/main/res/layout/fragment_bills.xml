@@ -5,10 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".BillsFragment">
 
-    <ImageView
-        android:id="@+id/image"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ListView
+            android:id="@+id/listViewBills"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="16dp"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

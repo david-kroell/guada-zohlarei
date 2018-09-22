@@ -7,6 +7,14 @@ public class Bill {
     public String Image;
     public String Title;
 
+    public Bill(int id, String description, Double price, String image, String title) {
+        Id = id;
+        Description = description;
+        Price = price;
+        Image = image;
+        Title = title;
+    }
+
     public String getDescription() {
         return Description;
     }

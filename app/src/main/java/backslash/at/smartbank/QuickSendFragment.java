@@ -44,9 +44,6 @@ public class QuickSendFragment extends Fragment {
             textViewNFCStatusPassive.setVisibility(View.VISIBLE);
         }
 
-        Intent test = new Intent(getActivity(), BillDetailsActivity.class);
-        startActivity(test);
-
         return v;
     }
 }

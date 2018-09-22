@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +27,11 @@ import java.util.Date;
 import java.util.List;
 
 public class OverviewFragment extends Fragment {
+
+    BankAccount current;
+    TextView textViewCurrentBallance;
+    TextView textViewDate;
+
     public static OverviewFragment newInstance() {
         OverviewFragment fragment = new OverviewFragment();
         return fragment;
@@ -38,6 +45,9 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
+
+        textViewCurrentBallance = v.findViewById(R.id.textViewCurrentBallance);
+        textViewDate = v.findViewById(R.id.textViewDate);
 
         ListView listViewOverview = v.findViewById(R.id.listViewOverview);
         final List<Transaction> transactions = new ArrayList<Transaction>();
@@ -64,17 +74,13 @@ public class OverviewFragment extends Fragment {
                 }
 
                 date.setText(dateText);
-                value.setText(valueText);
+                value.setText(valueText + " ITL");
                 information.setText(informationText);
 
                 return v;
             }
         };
         listViewOverview.setAdapter(arrayAdapter);
-
-        final List<String> bankAccounts = new ArrayList<String>();
-        bankAccounts.add("AT1");
-        bankAccounts.add("AT2");
 
         Spinner spinner = v.findViewById(R.id.spinnerBankAccount);
         // Values
@@ -86,6 +92,8 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 //Toast.makeText(getActivity(), bankAccounts.get(position), Toast.LENGTH_SHORT).show();
+                current = MainActivity.bankAccounts.get(position);
+                setCurrentAccountInformation();
             }
 
             @Override
@@ -94,6 +102,19 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+        current = MainActivity.bankAccounts.get(0);
+        setCurrentAccountInformation();
+
         return v;
+    }
+
+    private void setCurrentAccountInformation() {
+        textViewCurrentBallance.setText(String.valueOf(current.getBalance()) + " ITL");
+        textViewDate.setText(DateFormat.format("dd.MM.yyyy", Calendar.getInstance().getTime()));
+        if(current.getBalance() > 0) {
+            textViewCurrentBallance.setTextColor(Color.parseColor("#007F32"));
+        } else if(current.getBalance() < 0) {
+            textViewCurrentBallance.setTextColor(Color.RED);
+        }
     }
 }

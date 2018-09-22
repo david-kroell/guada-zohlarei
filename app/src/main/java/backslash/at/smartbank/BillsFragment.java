@@ -5,22 +5,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.Frame;
@@ -45,6 +52,7 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
     static final int REQUEST_IMAGE_CAPTURE = 3113;
     static final int REQUEST_SAVE_BILL = 1337;
     String mCurrentPhotoPath;
+    ListView listViewBills;
 
     public static BillsFragment newInstance() {
         BillsFragment fragment = new BillsFragment();
@@ -60,8 +68,41 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_bills, container, false);
-        volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
-        volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
+
+        listViewBills = view.findViewById(R.id.listViewBills);
+        final List<Bill> bills = new ArrayList<Bill>();
+        bills.add(new Bill(1, "Billasemml", 3.99, "asdf", "Billa"));
+        bills.add(new Bill(2, "Kas", 3.00, "seas", "Spar"));
+        ArrayAdapter<Bill> arrayAdapter = new ArrayAdapter<Bill>(getContext(), R.layout.listitem_bills, R.id.textViewBillsName1, bills) {
+            @NonNull
+            @Override
+            public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                ImageView bill1 = v.findViewById(R.id.imageViewBills1);
+                ImageView bill2 = v.findViewById(R.id.imageViewBills2);
+                TextView name1 = v.findViewById(R.id.textViewBillsName1);
+                TextView name2 = v.findViewById(R.id.textViewBillsName2);
+                TextView price1 = v.findViewById(R.id.textViewBillsPrice1);
+                TextView price2 = v.findViewById(R.id.textViewBillsPrice2);
+
+                String nameText = bills.get(position).getTitle();
+                String priceText = bills.get(position).getPrice().toString();
+
+                if(position % 2 == 1) {
+                    name1.setText(nameText);
+                    price1.setText(priceText);
+                } else {
+                    name2.setText(nameText);
+                    price2.setText(priceText);
+                }
+
+                return v;
+            }
+        };
+        listViewBills.setAdapter(arrayAdapter);
+
+        //volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
+        //volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
