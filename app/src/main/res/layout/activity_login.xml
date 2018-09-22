@@ -7,27 +7,32 @@
     tools:context=".LoginActivity"
     android:fitsSystemWindows="true">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_raiffeisen"
+        android:layout_alignParentStart="true"
+        android:adjustViewBounds="true"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
         android:padding="16dp">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_raiffeisen"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="50dp"/>
 
         <EditText
             android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/textbox"
+            android:inputType="text"
             android:hint="Username"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#AAA"/>
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -35,6 +40,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:background="@drawable/textbox"
+            android:layout_marginBottom="10dp"
             android:hint="Password"/>
 
         <Button
@@ -42,6 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick_ButtonLogin"
+            android:background="@drawable/textbox"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
             android:text="LOGIN"/>
 
     </LinearLayout>

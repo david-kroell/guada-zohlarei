@@ -52,12 +52,10 @@ public class VolleyRequestHandlerLogin {
 
                                 if(!token.equals("")) {
                                     IcallbackLogin.loginSuccess(token);
-                                } else {
-                                    IcallbackLogin.loginSuccess("INVALID");
                                 }
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                IcallbackLogin.loginSuccess("INVALID");
                             }
                         }
                     }, new Response.ErrorListener() {

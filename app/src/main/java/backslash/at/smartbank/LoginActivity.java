@@ -1,5 +1,7 @@
 package backslash.at.smartbank;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
 
     EditText mUserName;
     EditText mPassword;
+    String username;
     VolleyRequestHandlerLogin volleyRequestHandlerLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +31,28 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
     public void onClick_ButtonLogin(View v) {
         String username = mUserName.getText().toString();
         String password = mPassword.getText().toString();
-        volleyRequestHandlerLogin.Authenticate(username,password);
+        if(!username.equals("") && !password.equals("")) {
+            this.username = username;
+            volleyRequestHandlerLogin.Authenticate(username,password);
+        } else {
+            Toast.makeText(this, "Please enter a valid username and password!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void loginSuccess(String token) {
-        Toast.makeText(this,token,Toast.LENGTH_SHORT).show();
-        Intent main = new Intent(this, MainActivity.class);
-        startActivity(main);
-        finish();
+        if (token != "INVALID") {
+            MainActivity.user = new User(this.username, token);
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
+        } else {
+            Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void loginError(Integer errorCode) {
-        Toast.makeText(this,"oasch" + errorCode.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
     }
 }
