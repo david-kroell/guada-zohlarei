@@ -10,59 +10,58 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class VolleyRequestHandlerLogin {
+public class VolleyRequestHandlerAccounts {
     private  static RequestQueue requestQueue;
-    private IVolleyCallbackLogin IcallbackLogin;
+    private IVolleyCallbackAccounts IcallbackAccounts;
     private String uri;
     private Boolean connected;
 
-    public VolleyRequestHandlerLogin(Context context, IVolleyCallbackLogin icallbackLogin) {
+    public VolleyRequestHandlerAccounts(Context context, IVolleyCallbackAccounts icallbackAccounts) {
         requestQueue = RequestQueueSingleton.getInstance(context).getRequestQueue();
-        this.IcallbackLogin = icallbackLogin;
+        this.IcallbackAccounts = icallbackAccounts;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         connected = cm.getActiveNetworkInfo().isConnected();
         this.uri = "http://172.31.203.133:8081/v1/user/login";
     }
 
-    public void Authenticate(String username, String password) {
-
+    public void getAllAccounts(String token){
         if(connected) {
             String url = this.uri;
 
             // Login
             Map<String, String> jsonParams = new HashMap<String, String>();
 
-            jsonParams.put("name", username);
-            jsonParams.put("password", password);
+            jsonParams.put("Authorization", token);
             String test = jsonParams.toString();
-            JsonObjectRequest postRequest = new JsonObjectRequest( Request.Method.POST, url,
+            JsonObjectRequest postRequest = new JsonObjectRequest( Request.Method.GET, url,
                     new JSONObject(jsonParams),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
                                 String token = response.getString("token");
+                                //parse to object
+                                Gson g = new Gson();
 
-                                if(!token.equals("")) {
-                                    IcallbackLogin.loginSuccess(token);
-                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                IcallbackLogin.loginSuccess("INVALID");
+                                IcallbackAccounts.problemOccured("Parsing error");
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     NetworkResponse networkResponse = error.networkResponse;
-                    IcallbackLogin.loginError(networkResponse.statusCode);
+                    IcallbackAccounts.problemOccured("network error");
                     error.printStackTrace();
                 }
             }) {
@@ -78,8 +77,7 @@ public class VolleyRequestHandlerLogin {
             postRequest.setTag("TAG");
             requestQueue.add(postRequest);
         } else {
-            IcallbackLogin.loginSuccess("NETWORK_ERROR");
+            IcallbackAccounts.problemOccured("NETWORK_ERROR");
         }
     }
-
 }
