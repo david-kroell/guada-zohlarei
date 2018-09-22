@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class BillsFragment extends Fragment {
+
+    View view;
 
     static final int REQUEST_IMAGE_CAPTURE = 3113;
 
@@ -21,14 +27,24 @@ public class BillsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        dispatchTakePictureIntent();
+
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bills, container, false);
+        view = inflater.inflate(R.layout.fragment_bills, container, false);
 
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Hello from FAB", Toast.LENGTH_SHORT).show();
+                dispatchTakePictureIntent();
+            }
+        });
+
+        return view;
     }
 
     private void dispatchTakePictureIntent() {
