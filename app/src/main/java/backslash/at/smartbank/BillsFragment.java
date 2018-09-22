@@ -36,7 +36,7 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
-public class BillsFragment extends Fragment {
+public class BillsFragment extends Fragment implements IV{
 
     View view;
 

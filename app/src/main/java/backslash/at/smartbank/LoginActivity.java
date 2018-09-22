@@ -40,12 +40,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         if(!username.equals("") && !password.equals("")) {
             this.username = username;
             volleyRequestHandlerLogin.Authenticate(username,password);
-        } else if(username.equals("a")) {
-            this.username = "maxmuster";
-            MainActivity.user = new User(this.username, "123");
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
-            finish();
+
         } else {
             Toast.makeText(this, "Please enter a valid username and password!", Toast.LENGTH_SHORT).show();
         }
