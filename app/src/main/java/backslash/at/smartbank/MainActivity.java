@@ -15,11 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment selectedFragment = null;
     public static User user;
+    public  static List<BankAccount> bankAccounts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

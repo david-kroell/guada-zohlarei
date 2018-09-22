@@ -13,12 +13,15 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class LoginActivity extends AppCompatActivity implements IVolleyCallbackLogin {
+import java.util.List;
+
+public class LoginActivity extends AppCompatActivity implements IVolleyCallbackLogin, IVolleyCallbackAccounts {
 
     EditText mUserName;
     EditText mPassword;
     String username;
     VolleyRequestHandlerLogin volleyRequestHandlerLogin;
+    VolleyRequestHandlerAccounts volleyRequestHandlerAccounts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         mUserName = findViewById(R.id.editTextUsername);
         mPassword = findViewById(R.id.editTextPassword);
         volleyRequestHandlerLogin = new VolleyRequestHandlerLogin(this.getApplicationContext(),this);
+        volleyRequestHandlerAccounts = new VolleyRequestHandlerAccounts(this.getApplicationContext(),this);
     }
 
     public void onClick_ButtonLogin(View v) {
@@ -51,9 +55,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
     public void loginSuccess(String token) {
         if (token != "INVALID") {
             MainActivity.user = new User(this.username, token);
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
-            finish();
+            volleyRequestHandlerAccounts.getAllAccounts(token);
         } else {
             Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
             Intent main = new Intent(this, MainActivity.class);
@@ -68,5 +70,18 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
         finish();
+    }
+
+    @Override
+    public void getAllAccounts(List<BankAccount> list) {
+        MainActivity.bankAccounts = list;
+        Intent main = new Intent(this, MainActivity.class);
+        startActivity(main);
+        finish();
+    }
+
+    @Override
+    public void problemOccured(String errorMessage) {
+        Toast.makeText(this,"accounts failed",Toast.LENGTH_LONG).show();
     }
 }
