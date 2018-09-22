@@ -42,6 +42,7 @@ public class BillDetailsActivity extends AppCompatActivity {
 
         if(extras.containsKey("prices")) {
             suggestedPrices = new ArrayList<>();
+
             ArrayList<String> prices = (ArrayList<String>)extras.getStringArrayList("prices");
             for(String price : prices) {
                 try {

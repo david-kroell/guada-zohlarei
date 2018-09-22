@@ -33,13 +33,15 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class BillsFragment extends Fragment {
+public class BillsFragment extends Fragment implements IVolleyCallbackBills{
 
     View view;
-
+    public static VolleyRequestHandlerBills volleyRequestHandlerBills;
+    List<Bill> allBills;
     static final int REQUEST_IMAGE_CAPTURE = 3113;
     static final int REQUEST_SAVE_BILL = 1337;
     String mCurrentPhotoPath;
@@ -58,7 +60,8 @@ public class BillsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_bills, container, false);
-
+        volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
+        volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +140,8 @@ public class BillsFragment extends Fragment {
             Log.d("BillDetection", prices.size() + " testcases match");
             Intent launchDetailsView = new Intent(getActivity(), BillDetailsActivity.class);
             launchDetailsView.putExtra("pictureUri", mCurrentPhotoPath);
-            launchDetailsView.putStringArrayListExtra("prices", prices);
+            if(prices.size() > 0)
+                launchDetailsView.putStringArrayListExtra("prices", prices);
             startActivityForResult(launchDetailsView, REQUEST_SAVE_BILL);
             //Log.d("BillDetection", "Found prices: " + );
         }
@@ -157,5 +161,20 @@ public class BillsFragment extends Fragment {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    @Override
+    public void getAllBills(List<Bill> bills) {
+        this.allBills = bills;
+    }
+
+    @Override
+    public void uploadBillSuccess(Bill b) {
+        this.allBills.add(b);
+    }
+
+    @Override
+    public void billError(String error) {
+        Toast.makeText(getContext(),"Error with bills", Toast.LENGTH_LONG).show();
     }
 }
