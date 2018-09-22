@@ -48,11 +48,17 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
             finish();
         } else {
             Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
         }
     }
 
     @Override
     public void loginError(Integer errorCode) {
         Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
+        Intent main = new Intent(this, MainActivity.class);
+        startActivity(main);
+        finish();
     }
 }
