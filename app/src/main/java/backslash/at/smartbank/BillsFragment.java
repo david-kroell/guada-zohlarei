@@ -40,7 +40,8 @@ import static android.app.Activity.RESULT_OK;
 public class BillsFragment extends Fragment implements IVolleyCallbackBills{
 
     View view;
-    VolleyRequestHandlerBills volleyRequestHandlerBills;
+    public static VolleyRequestHandlerBills volleyRequestHandlerBills;
+    List<Bill> allBills;
     static final int REQUEST_IMAGE_CAPTURE = 3113;
     static final int REQUEST_SAVE_BILL = 1337;
     String mCurrentPhotoPath;
@@ -59,7 +60,8 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_bills, container, false);
-
+        volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
+        volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,16 +164,16 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
 
     @Override
     public void getAllBills(List<Bill> bills) {
-
+        this.allBills = bills;
     }
 
     @Override
     public void uploadBillSuccess(Bill b) {
-
+        this.allBills.add(b);
     }
 
     @Override
     public void billError(String error) {
-
+        Toast.makeText(getContext(),"Error with bills", Toast.LENGTH_LONG).show();
     }
 }
