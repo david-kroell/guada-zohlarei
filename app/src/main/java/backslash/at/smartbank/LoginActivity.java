@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
     EditText mUserName;
     EditText mPassword;
     String username;
+    private ProgressBar spinner;
     VolleyRequestHandlerLogin volleyRequestHandlerLogin;
     VolleyRequestHandlerAccounts volleyRequestHandlerAccounts;
     @Override
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         mPassword = findViewById(R.id.editTextPassword);
         volleyRequestHandlerLogin = new VolleyRequestHandlerLogin(this.getApplicationContext(),this);
         volleyRequestHandlerAccounts = new VolleyRequestHandlerAccounts(this.getApplicationContext(),this);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
     }
 
     public void onClick_ButtonLogin(View v) {
@@ -40,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         if(!username.equals("") && !password.equals("")) {
             this.username = username;
             volleyRequestHandlerLogin.Authenticate(username,password);
-
+            spinner.setVisibility(View.VISIBLE);
         } else {
             Toast.makeText(this, "Please enter a valid username and password!", Toast.LENGTH_SHORT).show();
         }
@@ -57,14 +61,23 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
             startActivity(main);
             finish();
         }
+        spinner.setVisibility(View.GONE);
     }
 
     @Override
     public void loginError(Integer errorCode) {
-        Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
-        Intent main = new Intent(this, MainActivity.class);
-        startActivity(main);
-        finish();
+        switch (errorCode) {
+            case 9999:
+                Toast.makeText(this, "No network connection!",Toast.LENGTH_SHORT).show();
+                break;
+            case 401:
+                Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
+                break;
+            case 413:
+                Toast.makeText(this, "Service unavailable, check SLA!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        spinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -73,10 +86,12 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
         finish();
+        spinner.setVisibility(View.GONE);
     }
 
     @Override
     public void problemOccured(String errorMessage) {
         Toast.makeText(this,"accounts failed",Toast.LENGTH_LONG).show();
+        spinner.setVisibility(View.GONE);
     }
 }

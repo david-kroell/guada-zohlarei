@@ -1,57 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:id="@+id/layoutLogin">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/logo_raiffeisen"
-        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="@+id/layoutLogin"
         android:adjustViewBounds="true"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/layoutLogin"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutLogin"
+        app:layout_constraintRight_toRightOf="@id/layoutLogin"
+        app:layout_constraintLeft_toLeftOf="@id/layoutLogin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online Banking"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:textSize="30dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/loader" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/layoutLogin">
 
         <EditText
             android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/textbox"
-            android:inputType="text"
-            android:hint="Username"/>
+            android:hint="Username"
+            android:inputType="text" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#AAA"/>
+            android:background="#AAA" />
 
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:background="@drawable/textbox"
             android:layout_marginBottom="10dp"
-            android:hint="Password"/>
+            android:background="@drawable/textbox"
+            android:hint="Password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClick_ButtonLogin"
             android:background="@drawable/button_primary"
-            android:textColor="@android:color/white"
-            android:text="LOGIN"/>
+            android:onClick="onClick_ButtonLogin"
+            android:text="LOGIN"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
