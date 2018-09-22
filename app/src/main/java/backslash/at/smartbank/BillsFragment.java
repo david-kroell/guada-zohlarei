@@ -138,7 +138,8 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
             Log.d("BillDetection", prices.size() + " testcases match");
             Intent launchDetailsView = new Intent(getActivity(), BillDetailsActivity.class);
             launchDetailsView.putExtra("pictureUri", mCurrentPhotoPath);
-            launchDetailsView.putStringArrayListExtra("prices", prices);
+            if(prices.size() > 0)
+                launchDetailsView.putStringArrayListExtra("prices", prices);
             startActivityForResult(launchDetailsView, REQUEST_SAVE_BILL);
             //Log.d("BillDetection", "Found prices: " + );
         }
