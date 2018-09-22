@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
 public class MainActivity extends AppCompatActivity {
 
     private Fragment selectedFragment = null;
-
+    public static String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
