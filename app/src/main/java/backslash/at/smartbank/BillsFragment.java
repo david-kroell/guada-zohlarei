@@ -1,5 +1,6 @@
 package backslash.at.smartbank;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +31,7 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
@@ -89,6 +91,7 @@ public class BillsFragment extends Fragment {
     }
 
     @Override
+    @TargetApi(26)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("BillDetection", "received result");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -116,14 +119,24 @@ public class BillsFragment extends Fragment {
             Log.d("BillDetection", "initializing recognizer");
             TextRecognizer textRecognizer = new TextRecognizer.Builder(getContext()).build();
             SparseArray<TextBlock> texts = textRecognizer.detect(frame);
-
+            ArrayList<String> alltexts = new ArrayList<>();
             Log.d("BillDetection", "found " + texts.size() + " texts");
+            ArrayList<String> prices = new ArrayList<>();
             for (int i = 0; i < texts.size(); ++i) {
                 TextBlock item = texts.valueAt(i);
                 if (item != null && item.getValue() != null) {
-                    Log.d("BillDetection", "Text detected! " + item.getValue());
+                    String testcase = item.getValue().replace('\n', ' ').replace("-", "0");
+                    alltexts.add(testcase);
+                    String[] testCaseParts = testcase.split("\\s+");
+                    Log.d("BillDetection", "Testcase \"" + testcase + "\" has " + testCaseParts.length + " parts");
+                    for(String testCasePart : testCaseParts) {
+                        if(testCasePart.matches("^\\d{1,}[,.]\\d{2}$"))
+                            prices.add(testCasePart);
+                    }
                 }
             }
+            Log.d("BillDetection", prices.size() + " testcases match");
+            Log.d("BillDetection", "Found prices: " + String.join(", ", prices));
         }
     }
 
