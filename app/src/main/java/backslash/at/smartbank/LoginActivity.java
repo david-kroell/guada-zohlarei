@@ -17,7 +17,6 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
     EditText mUserName;
     EditText mPassword;
     String username;
-    ProgressDialog pd;
     VolleyRequestHandlerLogin volleyRequestHandlerLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,6 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         String username = mUserName.getText().toString();
         this.username = username;
         String password = mPassword.getText().toString();
-        pd = new ProgressDialog(this);
-        pd.setMessage("Logging in");
-        pd.show();
         volleyRequestHandlerLogin.Authenticate(username,password);
     }
 
@@ -49,12 +45,10 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         } else {
             Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
         }
-        pd.dismiss();
     }
 
     @Override
     public void loginError(Integer errorCode) {
         Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
-        pd.dismiss();
     }
 }
