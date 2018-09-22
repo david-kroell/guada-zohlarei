@@ -48,8 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick_ButtonLogin"
-            android:background="@drawable/textbox"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:background="@drawable/button_primary"
             android:textColor="@android:color/white"
             android:text="LOGIN"/>
 

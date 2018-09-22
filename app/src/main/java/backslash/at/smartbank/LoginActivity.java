@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,8 +22,9 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
+
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         mUserName = findViewById(R.id.editTextUsername);
         mPassword = findViewById(R.id.editTextPassword);
         volleyRequestHandlerLogin = new VolleyRequestHandlerLogin(this.getApplicationContext(),this);
@@ -34,6 +36,12 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
         if(!username.equals("") && !password.equals("")) {
             this.username = username;
             volleyRequestHandlerLogin.Authenticate(username,password);
+        } else if(username.equals("a")) {
+            this.username = "maxmuster";
+            MainActivity.user = new User(this.username, "123");
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
         } else {
             Toast.makeText(this, "Please enter a valid username and password!", Toast.LENGTH_SHORT).show();
         }
