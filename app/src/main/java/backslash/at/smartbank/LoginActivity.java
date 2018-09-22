@@ -30,9 +30,13 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
 
     public void onClick_ButtonLogin(View v) {
         String username = mUserName.getText().toString();
-        this.username = username;
         String password = mPassword.getText().toString();
-        volleyRequestHandlerLogin.Authenticate(username,password);
+        if(!username.equals("") && !password.equals("")) {
+            this.username = username;
+            volleyRequestHandlerLogin.Authenticate(username,password);
+        } else {
+            Toast.makeText(this, "Please enter a valid username and password!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
