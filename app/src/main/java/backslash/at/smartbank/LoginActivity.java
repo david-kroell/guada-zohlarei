@@ -16,6 +16,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
 
     EditText mUserName;
     EditText mPassword;
+    String username;
     ProgressDialog pd;
     VolleyRequestHandlerLogin volleyRequestHandlerLogin;
     @Override
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
 
     public void onClick_ButtonLogin(View v) {
         String username = mUserName.getText().toString();
+        this.username = username;
         String password = mPassword.getText().toString();
         pd = new ProgressDialog(this);
         pd.setMessage("Logging in");
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
     @Override
     public void loginSuccess(String token) {
         if (token != "INVALID") {
-            MainActivity.token = token;
+            MainActivity.user = new User(this.username, token);
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
             finish();
