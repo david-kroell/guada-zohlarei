@@ -71,8 +71,6 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
 
         listViewBills = view.findViewById(R.id.listViewBills);
         final List<Bill> bills = new ArrayList<Bill>();
-        bills.add(new Bill(1, "Billasemml", 3.99, "asdf", "Billa"));
-        bills.add(new Bill(2, "Kas", 3.00, "seas", "Spar"));
         ArrayAdapter<Bill> arrayAdapter = new ArrayAdapter<Bill>(getContext(), R.layout.listitem_bills, R.id.textViewBillsName1, bills) {
             @NonNull
             @Override

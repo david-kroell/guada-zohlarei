@@ -23,6 +23,9 @@ import java.util.Collections;
 public class BillDetailsActivity extends AppCompatActivity {
 
     static ArrayList<Double> suggestedPrices;
+    EditText editTextTitle, editTextDescription;
+    AutoCompleteTextView autoCompleteTextViewPrice;
+    Bitmap image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +35,16 @@ public class BillDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        editTextTitle = findViewById(R.id.editTextName);
+        editTextDescription = findViewById(R.id.editTextDescription);
+        autoCompleteTextViewPrice = findViewById(R.id.autoCompleteTextViewPrice);
+
         Bundle extras = getIntent().getExtras();
         if(extras.containsKey("pictureUri")) {
-            Bitmap bitmap = BitmapFactory.decodeFile((String) extras.get("pictureUri"));
+            image = BitmapFactory.decodeFile((String) extras.get("pictureUri"));
             // bind header image
             AppBarLayout abl = findViewById(R.id.app_bar);
-            abl.setBackground(new BitmapDrawable(getResources(), bitmap));
+            abl.setBackground(new BitmapDrawable(getResources(), image));
         }
 
         if(extras.containsKey("prices")) {
@@ -54,7 +61,6 @@ public class BillDetailsActivity extends AppCompatActivity {
                     Log.e("SmartBank Parsing", "Failed to parse the following text as double: " + price);
                 }
             }
-            AutoCompleteTextView autoCompleteTextViewPrice = findViewById(R.id.autoCompleteTextViewPrice);
             autoCompleteTextViewPrice.setText(String.format("%.2f", Collections.max(suggestedPrices)));
         }
 
@@ -62,6 +68,15 @@ public class BillDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Double price = null;
+                try
+                {
+                    price = Double.parseDouble(autoCompleteTextViewPrice.getText().toString());
+                }
+                catch(NumberFormatException e) {}
+
+                if(price != null)
+                    BillsFragment.volleyRequestHandlerBills.uploadBill(new Bill(editTextTitle.getText().toString(), image, price, editTextDescription.getText().toString()), MainActivity.user.getToken());
                 finish();
             }
         });

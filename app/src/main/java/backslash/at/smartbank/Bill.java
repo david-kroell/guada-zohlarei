@@ -1,5 +1,13 @@
 package backslash.at.smartbank;
 
+import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.util.Log;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import org.apache.commons.codec.binary.Base64;
+
 public class Bill {
     public int Id;
     public String Description;
@@ -7,12 +15,15 @@ public class Bill {
     public String Image;
     public String Title;
 
-    public Bill(int id, String description, Double price, String image, String title) {
-        Id = id;
-        Description = description;
-        Price = price;
-        Image = image;
-        Title = title;
+    public Bill(String Title, Bitmap Image, Double Price, String Description) {
+        this.Title = Title;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        Base64.encodeBase64(byteArray);
+        this.Image = new String(Base64.encodeBase64(byteArray));
+        this.Price = Price;
+        this.Description = Description;
     }
 
     public String getDescription() {
