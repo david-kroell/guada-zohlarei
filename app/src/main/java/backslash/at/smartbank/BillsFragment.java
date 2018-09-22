@@ -33,13 +33,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class BillsFragment extends Fragment implements IV{
+public class BillsFragment extends Fragment implements IVolleyCallbackBills{
 
     View view;
-
+    VolleyRequestHandlerBills volleyRequestHandlerBills;
     static final int REQUEST_IMAGE_CAPTURE = 3113;
     static final int REQUEST_SAVE_BILL = 1337;
     String mCurrentPhotoPath;
@@ -157,5 +158,20 @@ public class BillsFragment extends Fragment implements IV{
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    @Override
+    public void getAllBills(List<Bill> bills) {
+
+    }
+
+    @Override
+    public void uploadBillSuccess(Bill b) {
+
+    }
+
+    @Override
+    public void billError(String error) {
+
     }
 }
