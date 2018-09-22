@@ -41,6 +41,7 @@ public class BillsFragment extends Fragment {
     View view;
 
     static final int REQUEST_IMAGE_CAPTURE = 3113;
+    static final int REQUEST_SAVE_BILL = 1337;
     String mCurrentPhotoPath;
 
     public static BillsFragment newInstance() {
@@ -98,7 +99,7 @@ public class BillsFragment extends Fragment {
             Log.d("BillDetection", "result was ok");
 
             // Get the dimensions of the bitmap
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            /*BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
             int photoW = bmOptions.outWidth;
@@ -106,14 +107,12 @@ public class BillsFragment extends Fragment {
 
             // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false;
-            bmOptions.inPurgeable = true;
+            bmOptions.inPurgeable = true;*/
 
-            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
-            //Bundle extras = data.getExtras();
-            //Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = view.findViewById(R.id.image);
-            imageView.setImageBitmap(imageBitmap);
+            /*ImageView imageView = view.findViewById(R.id.image);
+            imageView.setImageBitmap(imageBitmap);*/
             Log.d("BillDetection", "building frame");
             Frame frame =  new Frame.Builder().setBitmap(imageBitmap).build();
             Log.d("BillDetection", "initializing recognizer");
@@ -136,7 +135,11 @@ public class BillsFragment extends Fragment {
                 }
             }
             Log.d("BillDetection", prices.size() + " testcases match");
-            Log.d("BillDetection", "Found prices: " + String.join(", ", prices));
+            Intent launchDetailsView = new Intent(getActivity(), BillDetailsActivity.class);
+            launchDetailsView.putExtra("pictureUri", mCurrentPhotoPath);
+            launchDetailsView.putStringArrayListExtra("prices", prices);
+            startActivityForResult(launchDetailsView, REQUEST_SAVE_BILL);
+            //Log.d("BillDetection", "Found prices: " + );
         }
     }
 
