@@ -41,4 +41,9 @@ public class Bill {
     public String getTitle() {
         return Title;
     }
+
+    @Override
+    public String toString() {
+        return this.getTitle() + " - " + this.getPrice().toString() + " ITL";
+    }
 }

@@ -18,14 +18,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.CardView;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +56,7 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
     static final int REQUEST_SAVE_BILL = 1337;
     String mCurrentPhotoPath;
     ListView listViewBills;
+    ArrayAdapter<Bill> arrayAdapter;
 
     public static BillsFragment newInstance() {
         BillsFragment fragment = new BillsFragment();
@@ -70,42 +74,20 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
         view = inflater.inflate(R.layout.fragment_bills, container, false);
 
         listViewBills = view.findViewById(R.id.listViewBills);
-        final List<Bill> bills = new ArrayList<Bill>();
-        ArrayAdapter<Bill> arrayAdapter = new ArrayAdapter<Bill>(getContext(), R.layout.listitem_bills, R.id.textViewBillsName1, bills) {
-            @NonNull
-            @Override
-            public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-                ImageView bill1 = v.findViewById(R.id.imageViewBills1);
-                ImageView bill2 = v.findViewById(R.id.imageViewBills2);
-                TextView name1 = v.findViewById(R.id.textViewBillsName1);
-                TextView name2 = v.findViewById(R.id.textViewBillsName2);
-                TextView price1 = v.findViewById(R.id.textViewBillsPrice1);
-                TextView price2 = v.findViewById(R.id.textViewBillsPrice2);
 
-                String nameText = bills.get(position).getTitle();
-                String priceText = bills.get(position).getPrice().toString();
+        allBills = new ArrayList<Bill>();
 
-                if(position % 2 == 1) {
-                    name1.setText(nameText);
-                    price1.setText(priceText);
-                } else {
-                    name2.setText(nameText);
-                    price2.setText(priceText);
-                }
+        //final List<Bill> bills = new ArrayList<Bill>();
+        //bills.add(new Bill("seas", null, 1.99, "Billa"));
+        //bills.add(new Bill("Kas", null, 3.49, "Spar"));
 
-                return v;
-            }
-        };
-        listViewBills.setAdapter(arrayAdapter);
 
-        //volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
-        //volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
+        volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
+        volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Hello from FAB", Toast.LENGTH_SHORT).show();
                 dispatchTakePictureIntent();
             }
         });
@@ -205,6 +187,14 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
     @Override
     public void getAllBills(List<Bill> bills) {
         this.allBills = bills;
+        arrayAdapter = new ArrayAdapter<Bill>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, allBills);
+        listViewBills.setAdapter(arrayAdapter);
+        listViewBills.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     @Override
