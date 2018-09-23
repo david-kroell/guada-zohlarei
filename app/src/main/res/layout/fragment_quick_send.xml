@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".QuickSendFragment"
     android:orientation="vertical"
     android:padding="16dp">
@@ -24,5 +25,42 @@
         android:drawablePadding="10dp"
         android:text="NFC not available"
         android:textSize="20dp"/>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_add_black_24dp"
+        android:backgroundTint="@color/colorPrimary"
+        app:fab_addButtonColorNormal="@color/colorPrimary"
+        app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+        app:fab_labelStyle="@style/customFab"
+        >
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_icon="@drawable/ic_fullscreen_black_24dp"
+            app:fab_size="mini"
+            android:id="@+id/fab_QR"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_compare_arrows_black_24dp"
+            android:id="@+id/fab_NORMAL"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_nfc_black_24dp"
+            android:id="@+id/fab_NFC"
+            />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </LinearLayout>

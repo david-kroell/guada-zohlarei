@@ -15,17 +15,6 @@ public class Bill {
     public String Image;
     public String Title;
 
-    public Bill(String Title, Bitmap Image, Double Price) {
-        this.Title = Title;
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        Image.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        Base64.encodeBase64(byteArray);
-        this.Image = new String(Base64.encodeBase64(byteArray));
-        this.Price = Price;
-        this.Description = "";
-    }
-
     public Bill(String Title, Bitmap Image, Double Price, String Description) {
         this.Title = Title;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -51,5 +40,10 @@ public class Bill {
 
     public String getTitle() {
         return Title;
+    }
+
+    @Override
+    public String toString() {
+        return this.getTitle() + " - " + this.getPrice().toString() + " ITL";
     }
 }
