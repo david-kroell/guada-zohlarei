@@ -43,7 +43,7 @@
                 android:focusedByDefault="false"
                 android:focusable="false"
                 android:textIsSelectable="false"
-                android:text="ITL"
+                android:text="€"
                 android:layout_weight="1"/>
 
         </LinearLayout>

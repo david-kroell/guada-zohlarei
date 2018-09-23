@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.action_bills:
                                 selectedFragment = BillsFragment.newInstance();
-                                setTitle("Bill Management");
+                                setTitle("Receipt Management");
                                 break;
                             case R.id.action_quick_send:
                                 selectedFragment = QuickSendFragment.newInstance();

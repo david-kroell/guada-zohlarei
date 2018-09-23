@@ -9,41 +9,50 @@ import java.io.IOException;
 import org.apache.commons.codec.binary.Base64;
 
 public class Bill {
-    public int Id;
-    public String Description;
-    public Double Price;
-    public String Image;
-    public String Title;
+    public int id;
+    public String description;
+    public Double price;
+    public String image;
+    private Bitmap bitmap;
+    public String title;
 
-    public Bill(String Title, Bitmap Image, Double Price, String Description) {
-        this.Title = Title;
+    public Bill(String title, Bitmap image, Double price, String description) {
+        this.title = title;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        Image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         Base64.encodeBase64(byteArray);
-        this.Image = new String(Base64.encodeBase64(byteArray));
-        this.Price = Price;
-        this.Description = Description;
+        this.image = new String(Base64.encodeBase64(byteArray));
+        this.price = price;
+        this.description = description;
+    }
+
+    public Bill(String Title, String Image, Double Price, String Description) {
+        this.title = Title;
+        this.image = Image;
+        this.price = Price;
+        this.description = Description;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public Double getPrice() {
-        return Price;
+        return price;
     }
 
     public String getImage() {
-        return Image;
+        return image;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
-    @Override
-    public String toString() {
-        return this.getTitle() + " - " + this.getPrice().toString() + " ITL";
+    public Bitmap getBitmap() { return bitmap; }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }

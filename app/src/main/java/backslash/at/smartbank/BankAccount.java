@@ -3,55 +3,55 @@ package backslash.at.smartbank;
 import java.util.Date;
 
 public class BankAccount {
-        public int Id;
+        public int id;
 
-        public String Iban;
-        public int Balance;
-        public Date Created;
-        public Date Updated;
+        public String iban;
+        public int balance;
+        public Date created;
+        public Date updated;
 
         @Override
         public String toString() {
-                return this.Iban;
+                return this.iban;
         }
 
         public int getId() {
-                return Id;
+                return id;
         }
 
         public void setId(int id) {
-                Id = id;
+                id = id;
         }
 
         public String getIban() {
-                return Iban;
+                return iban;
         }
 
         public void setIban(String iban) {
-                Iban = iban;
+                iban = iban;
         }
 
         public int getBalance() {
-                return Balance;
+                return balance;
         }
 
         public void setBalance(int balance) {
-                Balance = balance;
+                balance = balance;
         }
 
         public Date getCreated() {
-                return Created;
+                return created;
         }
 
         public void setCreated(Date created) {
-                Created = created;
+                created = created;
         }
 
         public Date getUpdated() {
-                return Updated;
+                return updated;
         }
 
         public void setUpdated(Date updated) {
-                Updated = updated;
+                updated = updated;
         }
 }

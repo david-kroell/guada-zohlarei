@@ -1,6 +1,7 @@
 package backslash.at.smartbank;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
@@ -13,12 +14,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,7 +101,6 @@ public class VolleyRequestHandlerBills {
                         @Override
                         public void onResponse(JSONArray response) {
                             try {
-                                //Log.e("RESPONSE:", response.toString());
                                 Gson g = new Gson();
                                 Bill[] arr = g.fromJson(response.toString(), Bill[].class);
 

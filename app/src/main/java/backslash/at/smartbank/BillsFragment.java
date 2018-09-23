@@ -6,13 +6,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -37,9 +42,13 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -164,7 +173,6 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
             if(prices.size() > 0)
                 launchDetailsView.putStringArrayListExtra("prices", prices);
             startActivityForResult(launchDetailsView, REQUEST_SAVE_BILL);
-            //Log.d("BillDetection", "Found prices: " + );
         }
     }
 
@@ -187,12 +195,63 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
     @Override
     public void getAllBills(List<Bill> bills) {
         this.allBills = bills;
-        arrayAdapter = new ArrayAdapter<Bill>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, allBills);
+        arrayAdapter = new ArrayAdapter<Bill>(getActivity(), R.layout.listitem_bill, R.id.textViewBillItemTitle, allBills) {
+            @NonNull
+            @Override
+            public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                final View v = super.getView(position, convertView, parent);
+                TextView title = v.findViewById(R.id.textViewBillItemTitle);
+                TextView price = v.findViewById(R.id.textViewBillItemValue);
+                final ImageView imageView = v.findViewById(R.id.imageViewThumb);
+                title.setText(allBills.get(position).getTitle());
+                price.setText(allBills.get(position).getPrice() + "€");
+                final String url = "http://172.31.204.151:80/bills/image/" + allBills.get(position).getImage();
+                /*Target target = new Target() {
+
+                    @Override
+                    public void onPrepareLoad(Drawable arg0) {
+                        Log.d("BITMAPLOAD", "Preparing to load " + url);
+                    }
+
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom arg1) {
+                        Log.d("BITMAPLOAD", arg1.name());
+                        allBills.get(position).setBitmap(bitmap);
+                        imageView.setImageBitmap(bitmap);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception ex, Drawable arg0) {
+                        Log.d("BITMAPLOAD", ex.getMessage());
+                    }
+                };*/
+
+                Picasso.get().load(url).into(imageView);
+                //Picasso.get().load("http://172.31.204.151:80/bills/image/" + allBills.get(position).getImage()).into(imageView);
+                /*else
+                    imageView.;*/
+                /*else {
+                    LoadImageTask loader = new LoadImageTask();
+                    loader.setBill(allBills.get(position));
+                    loader.execute("http://172.31.204.151:80/bills/image/" + allBills.get(position).getImage());
+                }*/
+
+                return v;
+            }
+        };
         listViewBills.setAdapter(arrayAdapter);
         listViewBills.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent showDetails = new Intent(getActivity(), BillDetailsActivity.class);
+                showDetails.putExtra("editDisable", true);
+                showDetails.putExtra("id", allBills.get(position).id);
+                showDetails.putExtra("title", allBills.get(position).title);
+                showDetails.putExtra("price", allBills.get(position).price);
+                showDetails.putExtra("description", allBills.get(position).description);
+                showDetails.putExtra("image", allBills.get(position).image);
+                showDetails.putExtra("bitmap", allBills.get(position).getBitmap());
+                startActivity(showDetails);
             }
         });
     }
