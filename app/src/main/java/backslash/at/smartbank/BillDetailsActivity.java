@@ -27,7 +27,7 @@ import java.util.Collections;
 public class BillDetailsActivity extends AppCompatActivity {
 
     static ArrayList<Double> suggestedPrices;
-    static Boolean editDisable;
+    static Boolean editDisable = false;
     EditText editTextTitle, editTextDescription;
     AutoCompleteTextView autoCompleteTextViewPrice;
     Bitmap image;

@@ -86,11 +86,6 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
 
         allBills = new ArrayList<Bill>();
 
-        //final List<Bill> bills = new ArrayList<Bill>();
-        //bills.add(new Bill("seas", null, 1.99, "Billa"));
-        //bills.add(new Bill("Kas", null, 3.49, "Spar"));
-
-
         volleyRequestHandlerBills = new VolleyRequestHandlerBills(getContext(),this);
         volleyRequestHandlerBills.getAllBills(MainActivity.user.getToken());
         FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -130,17 +125,6 @@ public class BillsFragment extends Fragment implements IVolleyCallbackBills{
         Log.d("BillDetection", "received result");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Log.d("BillDetection", "result was ok");
-
-            // Get the dimensions of the bitmap
-            /*BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            // Decode the image file into a Bitmap sized to fill the View
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inPurgeable = true;*/
 
             Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
