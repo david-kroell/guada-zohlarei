@@ -34,18 +34,17 @@ public class VolleyRequestHandlerBills {
         this.iCallbackBills = iVolleyCallbackBills;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         connected = cm.getActiveNetworkInfo().isConnected();
-        this.uri = "http://172.31.203.133:8081/v1/bill";
+        this.uri = "http://172.31.204.151:80/bills";
     }
     public void uploadBill(Bill b, String token){
         final String token2 = token;
         if(connected) {
-            String url = this.uri;
+            String url = this.uri + "/new";
 
             // Login
             Map<String, Object> jsonParams = new HashMap<String, Object>();
 
             jsonParams.put("Description", b.getDescription());
-
             jsonParams.put("Price", b.getPrice());
             jsonParams.put("Title", b.getTitle());
             jsonParams.put("Image", b.getImage());
@@ -91,7 +90,7 @@ public class VolleyRequestHandlerBills {
     public void getAllBills(String token){
         final String token2 = token;
         if(connected) {
-            String url = this.uri;
+            String url = this.uri + "/all";
             JsonArrayRequest postRequest = new JsonArrayRequest( Request.Method.GET, url,
                     null,
                     new Response.Listener<JSONArray>() {

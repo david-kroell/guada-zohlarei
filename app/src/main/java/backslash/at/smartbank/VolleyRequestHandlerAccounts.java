@@ -47,13 +47,13 @@ public class VolleyRequestHandlerAccounts {
             connected = false;
         }
 
-        this.uri = "http://172.31.203.133:8081/v1/account";
+        this.uri = "http://172.31.204.151:80/accounts";
     }
 
     public void getAllAccounts(String token){
         final String token2 = token;
         if(connected) {
-            String url = this.uri;
+            String url = this.uri + "/all";
 
             // Login
             Map<String, String> jsonParams = new HashMap<String, String>();

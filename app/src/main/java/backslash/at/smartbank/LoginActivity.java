@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -52,14 +53,16 @@ public class LoginActivity extends AppCompatActivity implements IVolleyCallbackL
 
     @Override
     public void loginSuccess(String token) {
-        if (token != "INVALID") {
+        Log.d("Login SmartBank", "login successful");
+        if (!token.isEmpty()) {
             MainActivity.user = new User(this.username, token);
             volleyRequestHandlerAccounts.getAllAccounts(token);
+            /*Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();*/
         } else {
             Toast.makeText(this, "Invalid login credentials!",Toast.LENGTH_SHORT).show();
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
-            finish();
+
         }
         spinner.setVisibility(View.GONE);
     }

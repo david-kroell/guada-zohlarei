@@ -2,6 +2,7 @@ package backslash.at.smartbank;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -33,7 +34,7 @@ public class VolleyRequestHandlerLogin {
             connected = false;
         }
 
-        this.uri = "http://172.31.203.133:8081/v1/user/login";
+        this.uri = "http://172.31.204.151:80/login";
     }
 
     public void Authenticate(String username, String password) {
@@ -53,6 +54,7 @@ public class VolleyRequestHandlerLogin {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                Log.d("SmartBank Login", response.toString());
                                 String token = response.getString("token");
 
                                 if(!token.equals("")) {

@@ -3,9 +3,6 @@ package backslash.at.smartbank;
 import java.util.Date;
 
 public class BankAccount {
-
-
-
         public int Id;
 
         public String Iban;

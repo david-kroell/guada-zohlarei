@@ -61,7 +61,9 @@ public class BillDetailsActivity extends AppCompatActivity {
                     Log.e("SmartBank Parsing", "Failed to parse the following text as double: " + price);
                 }
             }
-            autoCompleteTextViewPrice.setText(String.format("%.2f", Collections.max(suggestedPrices)));
+            try {
+                autoCompleteTextViewPrice.setText(String.format("%.2f", Collections.max(suggestedPrices)));
+            } catch (Exception ex) {}
         }
 
         FloatingActionButton fab = findViewById(R.id.fabEditBill);
